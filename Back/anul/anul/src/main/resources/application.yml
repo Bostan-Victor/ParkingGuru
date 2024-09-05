@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/example.db
+    username: user_user
+    password: "adminadmin"
+
+    liquibase:
+      change-log: classpath:liquibase/changelog.yml
