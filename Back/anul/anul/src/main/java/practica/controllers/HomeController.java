@@ -11,4 +11,9 @@ public class HomeController {
     @ResponseBody
     @RequestMapping(value = "",method = RequestMethod.GET)
 
+//    Just in order to test
+    public String hello(){
+        return "hello world";
+    }
+
 }
