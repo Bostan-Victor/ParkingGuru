@@ -1,7 +1,7 @@
 package practica.anul.controllers;
 
 import practica.anul.models.TestUsers;
-import practica.anul.repositories.TestUserRepository;
+import practica.anul.services.TestUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,24 +13,24 @@ import java.util.List;
 public class TestUserController {
 
     @Autowired
-    private TestUserRepository userRepository;
+    private TestUserService userService;
 
     // Create a new user
     @PostMapping
-    public TestUsers createUser(@RequestBody TestUsers user) {
-        return userRepository.save(user);
+    public ResponseEntity<TestUsers> createUser(@RequestBody TestUsers user) {
+        return ResponseEntity.ok(userService.createUser(user));
     }
 
     // Get all users
     @GetMapping
-    public List<TestUsers> getAllUsers() {
-        return userRepository.findAll();
+    public ResponseEntity<List<TestUsers>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     // Get a user by ID
     @GetMapping("/{id}")
     public ResponseEntity<TestUsers> getUserById(@PathVariable Long id) {
-        return userRepository.findById(id)
+        return userService.getUserById(id)
                 .map(user -> ResponseEntity.ok().body(user))
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -38,24 +38,18 @@ public class TestUserController {
     // Update a user
     @PutMapping("/{id}")
     public ResponseEntity<TestUsers> updateUser(@PathVariable Long id, @RequestBody TestUsers userDetails) {
-        return userRepository.findById(id)
-                .map(user -> {
-                    user.setName(userDetails.getName());
-                    user.setEmail(userDetails.getEmail());
-                    TestUsers updatedUser = userRepository.save(user);
-                    return ResponseEntity.ok(updatedUser);
-                }).orElse(ResponseEntity.notFound().build());
+        return userService.updateUser(id, userDetails)
+                .map(updatedUser -> ResponseEntity.ok().body(updatedUser))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     // Delete a user
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        return userRepository.findById(id)
-                .map(user -> {
-                    userRepository.delete(user);
-                    return ResponseEntity.ok().<Void>build();
-                }).orElse(ResponseEntity.notFound().build());
+        if (userService.deleteUser(id)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-
 }
-
