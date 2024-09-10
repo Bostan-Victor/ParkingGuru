@@ -22,6 +22,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-graphql'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.liquibase:liquibase-core'
+
+	// Adding Spring Security for authentication and authorization
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// Adding JWT for handling token creation and validation
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+	// Adding JAXB API if needed (may not be necessary for newer versions of Java, as it's included)
+	implementation 'javax.xml.bind:jaxb-api:2.3.0'
+
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework:spring-webflux'
