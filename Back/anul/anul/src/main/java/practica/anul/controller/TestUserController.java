@@ -1,7 +1,7 @@
-package practica.anul.controllers;
+package practica.anul.controller;
 
-import practica.anul.models.TestUsers;
-import practica.anul.services.TestUserService;
+import practica.anul.model.Users;
+import practica.anul.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,23 +13,23 @@ import java.util.List;
 public class TestUserController {
 
     @Autowired
-    private TestUserService userService;
+    private UserService userService;
 
     // Create a new user
     @PostMapping
-    public ResponseEntity<TestUsers> createUser(@RequestBody TestUsers user) {
+    public ResponseEntity<Users> createUser(@RequestBody Users user) {
         return ResponseEntity.ok(userService.createUser(user));
     }
 
     // Get all users
     @GetMapping
-    public ResponseEntity<List<TestUsers>> getAllUsers() {
+    public ResponseEntity<List<Users>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     // Get a user by ID
     @GetMapping("/{id}")
-    public ResponseEntity<TestUsers> getUserById(@PathVariable Long id) {
+    public ResponseEntity<Users> getUserById(@PathVariable Long id) {
         return userService.getUserById(id)
                 .map(user -> ResponseEntity.ok().body(user))
                 .orElse(ResponseEntity.notFound().build());
@@ -37,7 +37,7 @@ public class TestUserController {
 
     // Update a user
     @PutMapping("/{id}")
-    public ResponseEntity<TestUsers> updateUser(@PathVariable Long id, @RequestBody TestUsers userDetails) {
+    public ResponseEntity<Users> updateUser(@PathVariable Long id, @RequestBody Users userDetails) {
         return userService.updateUser(id, userDetails)
                 .map(updatedUser -> ResponseEntity.ok().body(updatedUser))
                 .orElse(ResponseEntity.notFound().build());

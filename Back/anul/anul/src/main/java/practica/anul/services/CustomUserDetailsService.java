@@ -1,6 +1,6 @@
 package practica.anul.services;
 
-import practica.anul.model.User;
+import practica.anul.model.Users;
 import practica.anul.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,13 +21,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findUserByEmail(email);
+        Users user = userRepository.findByEmail(email);
         List<String> roles = new ArrayList<>();
         roles.add("USER");
         UserDetails userDetails =
                 org.springframework.security.core.userdetails.User.builder()
                         .username(user.getEmail())
-                        .password(user.getPassword())
+//                        .password(user.getPassword())
                         .roles(roles.toArray(new String[0]))
                         .build();
         return userDetails;

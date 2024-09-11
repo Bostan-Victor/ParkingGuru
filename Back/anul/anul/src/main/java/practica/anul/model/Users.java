@@ -1,11 +1,11 @@
-package practica.anul.models;
+package practica.anul.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "test_users")
-public class TestUsers {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,6 +15,9 @@ public class TestUsers {
 
     @Column(nullable = false, unique = true, length = 100)
     private String email;
+
+//    @Column(nullable = false, length=32)
+//    private String password;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -51,4 +54,8 @@ public class TestUsers {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+//    public String getPassword() { return password; }
+//
+//    public void setPassword(String password) { this.password = password; }
 }

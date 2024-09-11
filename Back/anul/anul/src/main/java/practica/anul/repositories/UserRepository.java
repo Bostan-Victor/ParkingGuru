@@ -1,19 +1,13 @@
 package practica.anul.repositories;
 
-import org.springframework.web.servlet.ModelAndView;
-import practica.anul.model.User;
+import practica.anul.model.Users;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @Repository
-public class UserRepository {
+public interface UserRepository extends JpaRepository<Users, Long> {
 
-    private static final Map<String, User> users = new HashMap<>();
+    boolean existsByEmail(String email);
 
-    public User findUserByEmail(String email){
-        return users.get(email);
-    }
+    public Users findByEmail(String email);
 }

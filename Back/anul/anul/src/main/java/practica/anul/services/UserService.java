@@ -1,7 +1,8 @@
 package practica.anul.services;
 
-import practica.anul.models.TestUsers;
-import practica.anul.repositories.TestUserRepository;
+import practica.anul.exceptions.UserAlreadyExists;
+import practica.anul.model.Users;
+import practica.anul.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,24 +10,29 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TestUserService {
+public class UserService {
 
     @Autowired
-    private TestUserRepository userRepository;
+    private UserRepository userRepository;
 
-    public TestUsers createUser(TestUsers user) {
+    public Users createUser(Users user) {
+
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new UserAlreadyExists("A user with this email already exists.");
+        }
+
         return userRepository.save(user);
     }
 
-    public List<TestUsers> getAllUsers() {
+    public List<Users> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public Optional<TestUsers> getUserById(Long id) {
+    public Optional<Users> getUserById(Long id) {
         return userRepository.findById(id);
     }
 
-    public Optional<TestUsers> updateUser(Long id, TestUsers userDetails) {
+    public Optional<Users> updateUser(Long id, Users userDetails) {
         return userRepository.findById(id)
                 .map(user -> {
                     user.setName(userDetails.getName());
