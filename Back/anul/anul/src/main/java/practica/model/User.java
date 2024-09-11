@@ -5,7 +5,7 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private String phonenumber
+    private String phonenumber;
 
     public User(String email, String password, String phonenumber) {
         this.email = email;
@@ -50,6 +50,6 @@ public class User {
     }
 
     public void setPhonenumber(String phonenumber){
-        this.phonenumber = phonenumber
+        this.phonenumber = phonenumber;
     }
 }

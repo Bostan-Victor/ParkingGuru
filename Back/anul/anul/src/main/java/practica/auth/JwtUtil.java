@@ -13,24 +13,22 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class JwtUtil {
 
-
     private final String secret_key = "mysecretkey";
-    private long accessTokenValidity = 60*60*1000;
-
     private final JwtParser jwtParser;
 
-    private final String TOKEN_HEADER = "Authorization";
-    private final String TOKEN_PREFIX = "Bearer ";
+    private static final String TOKEN_HEADER = "Authorization";
+    private static final String TOKEN_PREFIX = "Bearer ";
 
-    public JwtUtil(){
-        this.jwtParser = Jwts.parser().setSigningKey(secret_key);
+    public JwtUtil() {
+        this.jwtParser = Jwts.parserBuilder().setSigningKey(secret_key).build();
     }
 
     public String createToken(User user) {
         Claims claims = Jwts.claims().setSubject(user.getEmail());
-        claims.put("firstName",user.getFirstName());
-        claims.put("lastName",user.getLastName());
+        claims.put("firstName", user.getFirstName());
+        claims.put("lastName", user.getLastName());
         Date tokenCreateTime = new Date();
+        long accessTokenValidity = 60; // Valid for 60 minutes
         Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(accessTokenValidity));
         return Jwts.builder()
                 .setClaims(claims)
@@ -60,7 +58,6 @@ public class JwtUtil {
     }
 
     public String resolveToken(HttpServletRequest request) {
-
         String bearerToken = request.getHeader(TOKEN_HEADER);
         if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
             return bearerToken.substring(TOKEN_PREFIX.length());
@@ -80,9 +77,8 @@ public class JwtUtil {
         return claims.getSubject();
     }
 
+    @SuppressWarnings("unchecked")
     private List<String> getRoles(Claims claims) {
         return (List<String>) claims.get("roles");
     }
-
-
 }

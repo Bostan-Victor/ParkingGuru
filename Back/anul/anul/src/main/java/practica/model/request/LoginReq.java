@@ -4,12 +4,11 @@ package com.example.springjwt.model.request;
 public class LoginReq {
     private String email;
     private String password;
-    private String phonenumber;
 
-    public LoginReq(String email, String password, phonenumber) {
+    public LoginReq(String email, String password) {
         this.email = email;
         this.password = password;
-        this.phonenumber = phonenumber;
+//      this.phonenumber = phonenumber;
     }
 
     public String getEmail() {
@@ -27,12 +26,12 @@ public class LoginReq {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getPhonenumber() {
-        return phonenumber
-    }
-
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
-    }
+//
+//    public String getPhonenumber() {
+//        return phonenumber
+//    }
+//
+//    public void setPhonenumber(String phonenumber) {
+//        this.phonenumber = phonenumber;
+//    }
 }
