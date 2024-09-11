@@ -1,15 +1,12 @@
-package com.example.springjwt.model.request;
-
+package practica.anul.model.request;
 
 public class LoginReq {
     private String email;
     private String password;
-    private String number;
 
     public LoginReq(String email, String password) {
         this.email = email;
         this.password = password;
-        this.number = number;
     }
 
     public String getEmail() {
@@ -26,9 +23,5 @@ public class LoginReq {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setNumber(String number){
-        this.number = number
     }
 }
